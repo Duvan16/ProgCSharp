@@ -9,53 +9,37 @@ namespace ProgCSharp
 {
     class Program
     {
-        public class ListaElementos<T>
+        public class usuario
         {
-            private List<T> elementos;
-
-            public ListaElementos()
-            {
-                elementos = new List<T>();
-            }
-
-            public void Agregar(T nuevoelemento)
-            {
-                elementos.Add(nuevoelemento);
-            }
-
-            public void Eliminar(T elementoseliminar)
-            {
-                elementos.Remove(elementoseliminar);
-            }
-
-            public void Listar()
-            {
-                foreach (var elemento in elementos)
-                {
-                    Console.WriteLine("El elemento es: {0}", elemento);
-                }
-            }
-
+            int id { get; set; }
+            string nombre { get; set; }
         }
-
         static void Main(string[] args)
         {
-            ListaElementos<int> ListaEntera = new ListaElementos<int>();
-            ListaEntera.Agregar(1);
-            ListaEntera.Agregar(2);
-            ListaEntera.Agregar(3);
-            ListaEntera.Eliminar(2);
+            //Colección NO Genérica ArrayList
+            //ArrayList objetos = new ArrayList();
 
-            ListaEntera.Listar();
-            Console.ReadKey();
+            //objetos.Add(1);
+            //objetos.Add("Angel Arias");
+            //objetos.Add(new usuario());
 
-            ListaElementos<string> ListaCadena = new ListaElementos<string>();
-            ListaCadena.Agregar("Duvan Gonzalez");
-            ListaCadena.Agregar("Patricia");
-            ListaCadena.Agregar("Paco");
-            ListaCadena.Eliminar("Paco");
+            //foreach (int i in objetos)
+            //{
+            //    Console.WriteLine(i);
+            //}
+            //Console.ReadKey();
 
-            ListaCadena.Listar();
+            //Colección Genérica List<T>
+            List<int> objetos = new List<int>();
+
+            objetos.Add(1);
+            objetos.Add(2);
+            objetos.Add(3);
+
+            foreach (int i in objetos)
+            {
+                Console.WriteLine(i);
+            }
             Console.ReadKey();
         }
     }
