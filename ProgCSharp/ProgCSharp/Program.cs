@@ -11,16 +11,14 @@ namespace ProgCSharp
     {
         static void Main(string[] args)
         {
-            SortedList lista = new SortedList();
+            string[] nombres = new string[2] { "Duvan Gonzalez", "http://facebook.com/duvangg" };
 
-            lista.Add(4, "Cuarto");
-            lista.Add(2, "Segundo");
-            lista.Add(1, "Primero");
-            lista.Add(3, "Tercero");
+            for (IEnumerator e = nombres.GetEnumerator(); e.MoveNext(); Console.WriteLine(e.Current)) ;
 
-            foreach (object clave in lista.Keys)
+
+            foreach (string nombre in nombres)
             {
-                Console.WriteLine("{0} - {1}", clave.ToString(), lista[clave].ToString());
+                Console.WriteLine(nombre);
             }
 
             Console.ReadKey();
