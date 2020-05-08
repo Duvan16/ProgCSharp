@@ -11,16 +11,38 @@ namespace ProgCSharp
     {
         static void Main(string[] args)
         {
-            string[] nombres = new string[2] { "Duvan Gonzalez", "http://facebook.com/duvangg" };
+            Queue q = new Queue();
 
-            for (IEnumerator e = nombres.GetEnumerator(); e.MoveNext(); Console.WriteLine(e.Current)) ;
+            q.Enqueue(1);
+            q.Enqueue(2);
+            q.Enqueue(3);
 
+            Console.WriteLine("Los Elementos de la lista son:");
 
-            foreach (string nombre in nombres)
+            while (q.Count > 0)
             {
-                Console.WriteLine(nombre);
+                Console.WriteLine(q.Dequeue());
             }
 
+            Console.WriteLine("Ahora el conteinido de nuestra cola son:" + q.Count);
+
+
+            //Implementación stack
+
+            Stack s = new Stack();
+
+            s.Push(1);
+            s.Push(2);
+            s.Push(3);
+
+            Console.WriteLine("Los Elementos que tenemos en la pila son:");
+
+            while (s.Count > 0)
+            {
+                Console.WriteLine(s.Pop());
+            }
+
+            Console.WriteLine("Los Elementos que hay ahora en la pila son:" + s.Count);
             Console.ReadKey();
         }
     }
