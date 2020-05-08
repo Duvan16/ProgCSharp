@@ -9,30 +9,53 @@ namespace ProgCSharp
 {
     class Program
     {
+        public class ListaElementos<T>
+        {
+            private List<T> elementos;
+
+            public ListaElementos()
+            {
+                elementos = new List<T>();
+            }
+
+            public void Agregar(T nuevoelemento)
+            {
+                elementos.Add(nuevoelemento);
+            }
+
+            public void Eliminar(T elementoseliminar)
+            {
+                elementos.Remove(elementoseliminar);
+            }
+
+            public void Listar()
+            {
+                foreach (var elemento in elementos)
+                {
+                    Console.WriteLine("El elemento es: {0}", elemento);
+                }
+            }
+
+        }
+
         static void Main(string[] args)
         {
-            int num1, num2, resultado;
+            ListaElementos<int> ListaEntera = new ListaElementos<int>();
+            ListaEntera.Agregar(1);
+            ListaEntera.Agregar(2);
+            ListaEntera.Agregar(3);
+            ListaEntera.Eliminar(2);
 
-            Console.WriteLine("Introduce el Primer Número");
-            num1 = Convert.ToInt32(Console.ReadLine());
+            ListaEntera.Listar();
+            Console.ReadKey();
 
-            Console.WriteLine("Introduce el Segundo Número");
-            num2 = Convert.ToInt32(Console.ReadLine());
+            ListaElementos<string> ListaCadena = new ListaElementos<string>();
+            ListaCadena.Agregar("Duvan Gonzalez");
+            ListaCadena.Agregar("Patricia");
+            ListaCadena.Agregar("Paco");
+            ListaCadena.Eliminar("Paco");
 
-            try
-            {
-                if (num2 == 0)
-                {
-                    throw new Exception("No se puede Dividir entre Cero (0)");
-                }
-
-                resultado = num1 / num2;
-                Console.WriteLine("{0}", "{1}", "{2}", num1, num2, resultado);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Se ha capturado la Excepción: {0}", e.ToString());
-            }
+            ListaCadena.Listar();
             Console.ReadKey();
         }
     }
