@@ -7,35 +7,32 @@ using System.Threading.Tasks;
 
 namespace ProgCSharp
 {
-    class DivNumeros
+    class Program
     {
-        int resultado;
-
-        DivNumeros()
-        {
-            resultado = 0;
-        }
-
-        public void Division(int num1, int num2)
-        {
-            try
-            {
-                resultado = num1 / num2;
-            }
-            catch (DivideByZeroException e)
-            {
-                Console.WriteLine("Se ha producido una excepción del tipo: {0}", e);
-            }
-            finally
-            {
-                Console.WriteLine("EL resultado final es: {0}", resultado);
-            }
-        }
-
         static void Main(string[] args)
         {
-            DivNumeros d = new DivNumeros();
-            d.Division(23, 2);
+            int num1, num2, resultado;
+
+            Console.WriteLine("Introduce el Primer Número");
+            num1 = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Introduce el Segundo Número");
+            num2 = Convert.ToInt32(Console.ReadLine());
+
+            try
+            {
+                if (num2 == 0)
+                {
+                    throw new Exception("No se puede Dividir entre Cero (0)");
+                }
+
+                resultado = num1 / num2;
+                Console.WriteLine("{0}", "{1}", "{2}", num1, num2, resultado);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Se ha capturado la Excepción: {0}", e.ToString());
+            }
             Console.ReadKey();
         }
     }
