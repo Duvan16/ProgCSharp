@@ -8,31 +8,19 @@ namespace ProgCSharp
 {
     class Persona
     {
-        string nombre;
-        int ojos, brazos, piernas;
-        string color_ojos;
-        string color_pelo;
-
-
-        public void andar(int velocidad)
+        public Persona()
         {
-            Console.WriteLine("La persona anda a: " + velocidad + " por hora");
+
         }
 
-        public void hablar()
-        {
-            Console.WriteLine("La persona esta hablando");
-        }
+        public string nombre { get; set; }
+        public int ojos { get; set; }
 
-        public string getNombre()
-        {
-            return nombre;
-        }
+        public int brazos { get; set; }
 
-        public void setNombre(string nombre)
-        {
-            this.nombre = nombre;
+        public int piernas { get; set; }
+        public string Colo_Ojos { get; set; }
 
-        }
+        public string Color_Pelo { get; set; }
     }
 }
