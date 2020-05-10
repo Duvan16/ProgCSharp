@@ -11,42 +11,36 @@ delegate void numeros(int n);
 
 namespace ProgCSharp
 {
+    class AgregarNumero
+    {
+        public delegate void delegado_Impar();
+        public event delegado_Impar evento_Impar;
+
+        public void Agregar()
+        {
+            int resultado;
+            resultado = 5 + 4;
+            Console.WriteLine(resultado.ToString());
+
+            if (resultado % 2 != 0)
+            {
+                evento_Impar();
+            }
+        }
+    }
+
     class Program
     {
-        static int numero = 10;
-
-        public static void sumarNumeros(int n)
+        static void EventoMensaje()
         {
-            numero += n;
-            Console.WriteLine("Este método tiene el valor: {0}", numero);
-        }
-
-        public static void multiplicarNumero(int n)
-        {
-            numero *= n;
-            Console.WriteLine("Este método tiene el valor: {0}", numero);
-        }
-
-        public static int obtenerNumero()
-        {
-            return numero;
+            Console.WriteLine("Se ha Ejecutado el Evento. Este es un número Impar");
         }
 
         static void Main(string[] args)
         {
-            numeros num = delegate (int x)
-            {
-                Console.WriteLine("El valor de este método es: {0}", x);
-            };
-
-            num(10);
-
-            num = new numeros(sumarNumeros);
-            num(5);
-
-            num = new numeros(multiplicarNumero);
-            num(2);
-
+            AgregarNumero a = new ProgCSharp.AgregarNumero();
+            a.evento_Impar += new AgregarNumero.delegado_Impar(EventoMensaje);
+            a.Agregar();
             Console.ReadKey();
         }
     }
