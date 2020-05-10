@@ -42,8 +42,32 @@ namespace ProgCSharp
             {
                 Console.WriteLine(entero[i]);
             }
-            Console.ReadKey();
+
             //Insertar elementos a la colección generica List
+
+            IList<int> entero4 = new List<int>() { 2, 3 };
+
+            entero4.Insert(1, 5);
+
+            foreach (var i in entero4)
+            {
+                Console.WriteLine(i);
+            }
+
+            // Eliminar elementos de la colección genérica list
+
+            IList<int> entero5 = new List<int>() { 1, 2, 3, 4 };
+
+            entero5.Remove(2); //eliminar el primer valor número 2 que encuentre en la lista
+
+            entero5.RemoveAt(2); // eliminar el elemento que está en la segunda posición de la lista
+
+            foreach (var i in entero5)
+            {
+                Console.WriteLine(i);
+            }
+
+            Console.ReadKey();
         }
     }
 }
