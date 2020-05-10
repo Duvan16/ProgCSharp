@@ -7,44 +7,43 @@ using System.Threading.Tasks;
 
 namespace ProgCSharp
 {
-    public class usuario
+    class Program
     {
-        public int id { get; set; }
-        public string nombre { get; set; }
-    }
-    public class ListaElementos<T>
-    {
-        private List<T> elementos;
-
-        public ListaElementos()
-        {
-            elementos = new List<T>();
-        }
-
-        public void Agregar(T nuevoelemento)
-        {
-            elementos.Add(nuevoelemento);
-        }
-
-        public void Eliminar(T eliminarelemento)
-        {
-            elementos.Remove(eliminarelemento);
-        }
-
         static void Main(string[] args)
         {
-            ListaElementos<int> Entero = new ListaElementos<int>();
-            Entero.Agregar(1);
-            Entero.Eliminar(1);
+            // Agregar Elementos Lista
+            IList<int> entero = new List<int>();
 
-            ListaElementos<string> cadenas = new ListaElementos<string>();
-            cadenas.Agregar("Duvan Gonzalez");
-            cadenas.Eliminar("Duvan Gonzalez");
 
-            ListaElementos<usuario> Objetos = new ListaElementos<usuario>();
-            Objetos.Agregar(new usuario { id = 1, nombre = "Duvan Gonzalez" });
-            Objetos.Eliminar(new usuario { id = 1, nombre = "Duvan Gonzalez" });
+            entero.Add(2);
+            entero.Add(3);
 
+            IList<string> cadena = new List<string>();
+
+            cadena.Add("dos");
+            cadena.Add("tres");
+
+            IList<int> entero1 = new List<int>() { 2, 3 };
+            IList<string> cadena1 = new List<string>() { "dos", "tres" };
+
+            // método AddRange
+
+            List<int> entero3 = new List<int>();
+            entero3.AddRange(entero3);
+
+            //Acceder a los elementoscolección List
+            Console.WriteLine("EL valor en la posición 1 de es: {0}", entero[0]);
+            foreach (int i in entero)
+            {
+                Console.WriteLine(i);
+            }
+
+            for (int i = 0; i < entero.Count; i++)
+            {
+                Console.WriteLine(entero[i]);
+            }
+            Console.ReadKey();
+            //Insertar elementos a la colección generica List
         }
     }
 }
