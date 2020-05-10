@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
-delegate int numeros(int n);
+delegate void numeros(int n);
 
 namespace ProgCSharp
 {
@@ -14,15 +15,16 @@ namespace ProgCSharp
     {
         static int numero = 10;
 
-        public static int sumarNumeros(int p) {
-            numero += p;
-            return numero;
+        public static void sumarNumeros(int n)
+        {
+            numero += n;
+            Console.WriteLine("Este método tiene el valor: {0}", numero);
         }
 
-        public static  int multiplicarNumero(int p)
+        public static void multiplicarNumero(int n)
         {
-            numero *= p;
-            return numero;
+            numero *= n;
+            Console.WriteLine("Este método tiene el valor: {0}", numero);
         }
 
         public static int obtenerNumero()
@@ -32,22 +34,18 @@ namespace ProgCSharp
 
         static void Main(string[] args)
         {
-            numeros num;
-            numeros numero1 = new numeros(sumarNumeros);
-            numeros numero2 = new numeros(multiplicarNumero);
+            numeros num = delegate (int x)
+            {
+                Console.WriteLine("El valor de este método es: {0}", x);
+            };
 
-            num = numero1;
-            num += numero2;
+            num(10);
 
+            num = new numeros(sumarNumeros);
             num(5);
 
-            Console.WriteLine("El valor de la variable num es: {0}", obtenerNumero());
-
-            /*numero1(10);
-            Console.WriteLine("El valor de la instancia numero1 es: {0}", obtenerNumero());
-
-            numero2(5);
-            Console.WriteLine("El valor de la instancia numero2 es {0}", obtenerNumero());*/
+            num = new numeros(multiplicarNumero);
+            num(2);
 
             Console.ReadKey();
         }
