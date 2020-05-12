@@ -1,50 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
-using espacionombres1;
-using espacionombres2;
-using espacionombres2.espacionombres3;
-
-namespace espacionombres1
-{
-    class clase1
-    {
-        public void funcion()
-        {
-            Console.WriteLine("Estoy dentro del Espacio de Nombres 1");
-        }
-    }
-}
-
-namespace espacionombres2
-{
-    class clase2
-    {
-        public  void funcion()
-        {
-            Console.WriteLine("Estoy dentro del Espacio de Nombre 2");
-        }
-    }
-
-    namespace espacionombres3
-    {
-        class clase3
-        {
-            public void funcion()
-            {
-                Console.WriteLine("Estoy dentro del Espacio de Nombre 3");
-            }
-        }
-
-    }
-
-
-}
 
 namespace ProgCSharp
 {
@@ -52,16 +14,20 @@ namespace ProgCSharp
     {
         static void Main(string[] args)
         {
-            //espacionombres1.clase en1 = new espacionombres1.clase();
-            //espacionombres2.clase en2 = new espacionombres2.clase();
+            FileStream F = new FileStream("prueba.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
-            clase1 en1 = new clase1();
-            clase2 en2 = new clase2();
-            clase3 en3 = new clase3();
+            for (int i = 1; i <= 20; i++)
+            {
+                F.WriteByte((byte)i);
+            }
 
-            en1.funcion();
-            en2.funcion();
-            en3.funcion();
+            F.Position = 0;
+
+            for (int i = 0; i <= 20; i++)
+            {
+                Console.Write(F.ReadByte() + " ");
+            }
+            F.Close();
 
             Console.ReadKey();
         }
