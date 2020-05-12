@@ -14,21 +14,35 @@ namespace ProgCSharp
     {
         static void Main(string[] args)
         {
-            FileStream F = new FileStream("prueba.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            //Leer, crear, modificar
+            //if (File.Exists("prueba.txt"))
+            //{
+            //    string contenido = File.ReadAllText("prueba.txt");
+            //    Console.WriteLine("El contenido de este fichero es:");
+            //    Console.WriteLine(contenido);
+            //}
 
-            for (int i = 1; i <= 20; i++)
+            //Console.WriteLine("Escribe el nuevo contenido:");
+            //string contenido2 = Console.ReadLine();
+            ////File.WriteAllText("prueba.txt", contenido2);
+            //File.AppendAllText("prueba.txt", contenido2);
+
+            //string contenido3 = File.ReadAllText("prueba.txt");
+            //Console.WriteLine("El nuevo contenido es:");
+            //Console.WriteLine(contenido3);
+            //Console.ReadKey();
+
+            // Eliminar Ficheros
+            if (File.Exists("prueba.txt"))
             {
-                F.WriteByte((byte)i);
+                File.Delete("prueba.txt");
+                if (File.Exists("prueba.txt") == false)
+                    Console.WriteLine("El archivo se ha eliminado...");
             }
-
-            F.Position = 0;
-
-            for (int i = 0; i <= 20; i++)
+            else
             {
-                Console.Write(F.ReadByte() + " ");
+                Console.WriteLine("El archivo buscado ya no existe");
             }
-            F.Close();
-
             Console.ReadKey();
         }
     }
