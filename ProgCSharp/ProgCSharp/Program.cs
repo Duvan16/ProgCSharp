@@ -14,40 +14,36 @@ namespace ProgCSharp
 {
     class Program
     {
-        class Colegio
-        {
-            public int id { get; set; }
-            public string nombre { get; set; }
-        }
+        //delegate int delegado(int i);
         static void Main(string[] args)
         {
-            //Ejemplo de un array
-            /*
-            string[] nombres = { "Duvan", "Patricia", "Alex","David" };
+            //delegado miDelegado = y => y * y;
+            //int j = miDelegado(5);
+            //Console.WriteLine(j);
+            //Console.ReadKey();
 
-            var lista = from n in nombres select n;
+            /*int[] numeros = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 25, 27, 29, 50 };
 
-            foreach (var l in lista)
-            {
-                Console.WriteLine(l);
-            }
+            double valormedio = numeros.Where(num => num % 2 == 1).Average();
+            Console.WriteLine(valormedio);
             Console.ReadKey();*/
 
-            // Ejemplo con una clase
+            // Árboles de expresión
 
-            List<Colegio> colegios = new List<Colegio>();
+            int[] numeros = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-            colegios.Add(new Colegio { id = 1, nombre = "Colegio 1" });
-            colegios.Add(new Colegio { id = 2, nombre = "Colegio 2" });
-            colegios.Add(new Colegio { id = 3, nombre = "Colegio 3" });
-
-            var colegioLista = from c in colegios select c;
-
-            foreach (var c in colegioLista)
+            foreach (int i in numeros.Where(x => {
+                if (x <= 3)
+                    return true;
+                else if (x >= 7)
+                    return true;
+                return false;
+            }))
             {
-                Console.WriteLine("El Colegio con id {0} se llama {1}", c.id, c.nombre);
+                Console.WriteLine(i);
             }
             Console.ReadKey();
+
         }
     }
 }
