@@ -16,15 +16,28 @@ namespace ProgCSharp
     {
         static void Main(string[] args)
         {
-            // Comprimir archivo zip
+            // Extracción de archivos por instancias
+            /*using (ZipArchive archivo = ZipFile.Open("E:/temp/prueba/Ejemplo01.zip",ZipArchiveMode.Read))
+            {
+                string destino = "E:/temp/prueba/extraccionZIP/";
 
-            //ZipFile.CreateFromDirectory("E:/temp/prueba/archivos", "E:/temp/prueba/ejemplo01.zip", CompressionLevel.Optimal, false);
+                ZipArchiveEntry elemento1 = archivo.GetEntry("Archivo 1.txt");
+                elemento1.ExtractToFile(destino + "Archivo 1.txt");
 
+                ZipArchiveEntry elemento2 = archivo.GetEntry("Directorio 1/Archivo 1-1.txt");
+                elemento2.ExtractToFile(destino + "Archivo 1-1.txt");
+            }
+            */
 
-            // Descomprimir archivo zip
+            // Crear archivo ZIP
 
-            ZipFile.ExtractToDirectory("E:/temp/prueba/ejemplo01.zip", "E:/temp/prueba/DireccionDestino");
+            using (ZipArchive archivo = ZipFile.Open("E:/temp/prueba/ejemplo02.zip",ZipArchiveMode.Create))
+            {
+                string Origen = "E:/temp/prueba/ExtraccionZIP/";
 
+                archivo.CreateEntryFromFile(Origen + "Archivo 1.txt", "Archivo 1.txt", CompressionLevel.Optimal);
+                archivo.CreateEntryFromFile(Origen + "Archivo 1-1.txt", "Directorio 1/Archivo 1-1.txt", CompressionLevel.Optimal);
+            }
 
         }
     }
