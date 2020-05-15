@@ -8,6 +8,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO.Compression;
 
 namespace ProgCSharp
 {
@@ -15,50 +16,16 @@ namespace ProgCSharp
     {
         static void Main(string[] args)
         {
-            // Clase StreamReader
-            /* try
-             {
-                 using (StreamReader leer = new StreamReader("c:/prueba.txt"))
-                 {
-                     string linea;
+            // Comprimir archivo zip
 
-                     while ((linea=leer.ReadLine()) != null)
-                     {
-                         Console.WriteLine(linea);
-                     }
-                 }
-             }
-             catch (Exception e)
-             {
-                 Console.WriteLine("Se ha producido una excepción");
-                 Console.WriteLine(e.Message);
+            //ZipFile.CreateFromDirectory("E:/temp/prueba/archivos", "E:/temp/prueba/ejemplo01.zip", CompressionLevel.Optimal, false);
 
-             }
-             Console.ReadKey();
-              */
 
-            // Clase StreamWriter
+            // Descomprimir archivo zip
 
-            string[] nombres = new string[] { "Duvan Gonzalez", "Pepita perez" };
+            ZipFile.ExtractToDirectory("E:/temp/prueba/ejemplo01.zip", "E:/temp/prueba/DireccionDestino");
 
-            using (StreamWriter escribir = new StreamWriter("E:/prueba.txt"))
-            {
-                foreach (string nombre in nombres)
-                {
-                    escribir.WriteLine(nombre);
-                }
-            }
 
-            using (StreamReader leer = new StreamReader("E:/prueba.txt"))
-            {
-                string linea;
-
-                while ((linea = leer.ReadLine())!= null)
-                {
-                    Console.WriteLine(linea);
-                }
-            }
-            Console.ReadKey();
         }
     }
 }
