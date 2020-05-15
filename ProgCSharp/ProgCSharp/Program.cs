@@ -14,32 +14,40 @@ namespace ProgCSharp
 {
     class Program
     {
+        class Colegio
+        {
+            public int id { get; set; }
+            public string nombre { get; set; }
+        }
         static void Main(string[] args)
         {
-            // Extracción de archivos por instancias
-            /*using (ZipArchive archivo = ZipFile.Open("E:/temp/prueba/Ejemplo01.zip",ZipArchiveMode.Read))
+            //Ejemplo de un array
+            /*
+            string[] nombres = { "Duvan", "Patricia", "Alex","David" };
+
+            var lista = from n in nombres select n;
+
+            foreach (var l in lista)
             {
-                string destino = "E:/temp/prueba/extraccionZIP/";
-
-                ZipArchiveEntry elemento1 = archivo.GetEntry("Archivo 1.txt");
-                elemento1.ExtractToFile(destino + "Archivo 1.txt");
-
-                ZipArchiveEntry elemento2 = archivo.GetEntry("Directorio 1/Archivo 1-1.txt");
-                elemento2.ExtractToFile(destino + "Archivo 1-1.txt");
+                Console.WriteLine(l);
             }
-            */
+            Console.ReadKey();*/
 
-            // Crear archivo ZIP
+            // Ejemplo con una clase
 
-            using (ZipArchive archivo = ZipFile.Open("E:/temp/prueba/ejemplo02.zip",ZipArchiveMode.Create))
+            List<Colegio> colegios = new List<Colegio>();
+
+            colegios.Add(new Colegio { id = 1, nombre = "Colegio 1" });
+            colegios.Add(new Colegio { id = 2, nombre = "Colegio 2" });
+            colegios.Add(new Colegio { id = 3, nombre = "Colegio 3" });
+
+            var colegioLista = from c in colegios select c;
+
+            foreach (var c in colegioLista)
             {
-                string Origen = "E:/temp/prueba/ExtraccionZIP/";
-
-                archivo.CreateEntryFromFile(Origen + "Archivo 1.txt", "Archivo 1.txt", CompressionLevel.Optimal);
-                archivo.CreateEntryFromFile(Origen + "Archivo 1-1.txt", "Directorio 1/Archivo 1-1.txt", CompressionLevel.Optimal);
+                Console.WriteLine("El Colegio con id {0} se llama {1}", c.id, c.nombre);
             }
-
+            Console.ReadKey();
         }
     }
 }
-;
