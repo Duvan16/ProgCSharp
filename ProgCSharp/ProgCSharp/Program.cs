@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,13 +15,48 @@ namespace ProgCSharp
     {
         static void Main(string[] args)
         {
-            DirectoryInfo miDirectorio = new DirectoryInfo(@"C:/Windows");
+            // Clase StreamReader
+            /* try
+             {
+                 using (StreamReader leer = new StreamReader("c:/prueba.txt"))
+                 {
+                     string linea;
 
-            FileInfo[] fichero = miDirectorio.GetFiles();
+                     while ((linea=leer.ReadLine()) != null)
+                     {
+                         Console.WriteLine(linea);
+                     }
+                 }
+             }
+             catch (Exception e)
+             {
+                 Console.WriteLine("Se ha producido una excepción");
+                 Console.WriteLine(e.Message);
 
-            foreach (FileInfo f in fichero)
+             }
+             Console.ReadKey();
+              */
+
+            // Clase StreamWriter
+
+            string[] nombres = new string[] { "Duvan Gonzalez", "Pepita perez" };
+
+            using (StreamWriter escribir = new StreamWriter("E:/prueba.txt"))
             {
-                Console.WriteLine("El nombre del archivo es: {0} y tiene el tamaño de: {1} bytes", f.Name, f.Length);
+                foreach (string nombre in nombres)
+                {
+                    escribir.WriteLine(nombre);
+                }
+            }
+
+            using (StreamReader leer = new StreamReader("E:/prueba.txt"))
+            {
+                string linea;
+
+                while ((linea = leer.ReadLine())!= null)
+                {
+                    Console.WriteLine(linea);
+                }
             }
             Console.ReadKey();
         }
