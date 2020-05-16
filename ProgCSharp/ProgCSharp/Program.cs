@@ -14,51 +14,44 @@ namespace ProgCSharp
 {
     class Program
     {
+        class Clientes
+        {
+            public string nombre { get; set; }
+            public int edad { get; set; }
+        }
         static void Main(string[] args)
         {
-            // DECLARACIONES MULTIPLES DE EXPRESIONES LAMBDA
+            // DECLARACIONES LAMBDA CON CLASES
 
-            /*
-            // expresión lambda tipada de manera implicita, creamos una instancia a la expresiónn
-            Func<int, int> expresion1 = x => x + 1;
+            /*List<Clientes> cliente = new List<Clientes>() {
+                new Clientes {nombre = "Duvan",edad=20},
+                new Clientes {nombre="Patricia",edad=35}
+            };
 
-            //  usar la expresión lambda en el cuerpo de la declaración
-            Func<int, int> expresion2 = x => { return x + 1; };
+            var nombres = cliente.Select(x => x.nombre);
 
-            //usamos  parámteros en la expresión lambda
-            Func<int, int> expresion3 = (int x) => x + 1;
-
-            //usando parámetros en la expresión para usar en el cuerpo de la declaración
-            Func<int, int> expresion4 = (int x) => { return x + 1; };
-
-            //usa lambda con varios parámetros
-            Func<int, int, int> expresion5 = (x, y) => x * y;
-
-            // usar lambda en un método delegado
-            Func<int, int> expresion6 = delegate (int x) { return x + 1; };
-
-            // usar lambda en un método delegado sin parámetros
-            Func<int> expresion7 = delegate { return 1 + 1; };
-
-            Console.WriteLine(expresion1.Invoke(1));
-            Console.WriteLine(expresion2.Invoke(1));
-            Console.WriteLine(expresion3.Invoke(1));
-            Console.WriteLine(expresion4.Invoke(1));
-            Console.WriteLine(expresion5.Invoke(1,1));
-            Console.WriteLine(expresion6.Invoke(1));
-            Console.WriteLine(expresion7.Invoke());
-
-            Console.ReadKey();
-            */
-            List<int> numeros = new List<int>() { 1, 2, 3, 4, 6, 7, 8, 9 };
-            List<int> pares = numeros.FindAll(x => (x % 2) == 0);
-
-            foreach (var p in pares)
+            foreach (var nombre in nombres)
             {
-                Console.WriteLine("Los números pares son: {0}", p);
+                Console.WriteLine(nombre);
             }
-            Console.ReadKey();
 
+            // ordenar por edad
+            var edad = cliente.OrderBy(x => x.edad);
+
+            foreach (var e in edad)
+            {
+                Console.WriteLine("El cliente {0}, tiene {1} años", e.nombre, e.edad);
+            }
+            Console.ReadKey();*/
+
+            List<int> numeros = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            var lista = numeros.FindAll((i) =>
+            {
+                Console.WriteLine("El valor de i es: {0}", i);
+                return true;
+            });
+            Console.ReadKey();
         }
     }
 }
