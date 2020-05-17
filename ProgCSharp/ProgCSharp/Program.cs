@@ -14,43 +14,41 @@ namespace ProgCSharp
 {
     class Program
     {
-        class Clientes
-        {
-            public string nombre { get; set; }
-            public int edad { get; set; }
-        }
         static void Main(string[] args)
         {
-            // DECLARACIONES LAMBDA CON CLASES
+            ClientesDataContext db = new LinqToSql.ClientesDataContext();
 
-            /*List<Clientes> cliente = new List<Clientes>() {
-                new Clientes {nombre = "Duvan",edad=20},
-                new Clientes {nombre="Patricia",edad=35}
-            };
+            // Creación de un usuario
+            /*
+            Tabla nuevoCliente = new Tabla();
 
-            var nombres = cliente.Select(x => x.nombre);
+            nuevoCliente.Nombre = "Jose Antonio";
+            nuevoCliente.Edad = 50;
 
-            foreach (var nombre in nombres)
+            db.Tabla.InsertOnSubmit(nuevoCliente);
+            */
+
+            // Actualización de un usuario
+            /*
+            Tabla cliente = db.Tabla.FirstOrDefault(x => x.Nombre.Equals("Jose Antonio"));
+
+            cliente.Nombre = "Luis Antonio";
+            cliente.Edad = 45;
+            */
+
+            // Eliminación de un usuario
+            /*
+            Tabla cliente = db.Tabla.FirstOrDefault(x => x.Nombre.Equals("Paco"));
+            db.Tabla.DeleteOnSubmit(cliente);
+            */
+
+            var cliente = from c in db.Tabla where c.Nombre == "Luis Antonio" select c;
+
+            foreach (var c in cliente)
             {
-                Console.WriteLine(nombre);
+                Console.WriteLine(c.Nombre);
             }
-
-            // ordenar por edad
-            var edad = cliente.OrderBy(x => x.edad);
-
-            foreach (var e in edad)
-            {
-                Console.WriteLine("El cliente {0}, tiene {1} años", e.nombre, e.edad);
-            }
-            Console.ReadKey();*/
-
-            List<int> numeros = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
-            var lista = numeros.FindAll((i) =>
-            {
-                Console.WriteLine("El valor de i es: {0}", i);
-                return true;
-            });
+            db.SubmitChanges();
             Console.ReadKey();
         }
     }
