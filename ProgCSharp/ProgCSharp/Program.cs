@@ -14,58 +14,52 @@ using System.Threading;
 
 namespace ProgCSharp
 {
-    class Program
+    class Imprimir
     {
-        public static void LLamarHiloHijo()
+        public void ImprimirNumeros()
         {
-            //Console.WriteLine("El Hilo Hijo se está ejecutando");
-
-            /*
-            Console.WriteLine("Comienza la ejecución del Hilo Hijo");
-
-            int parar = 5000;
-
-            Console.WriteLine("El Hilo Hijo se parará duran {0} segundos", parar / 1000);
-
-            Thread.Sleep(parar);
-
-            Console.WriteLine("El Hilo Hijo continua su ejecución");
-            */
+            //lock (this)
+            //{
+            Monitor.Enter(this);
             try
             {
-                Console.WriteLine("Comienza la ejecución del Hilo Hijo");
-
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 5; i++)
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
                     Console.WriteLine(i);
                 }
-                Console.WriteLine("El Hilo Hijo se ha completado");
             }
-            catch (ThreadAbortException e)
+            catch (Exception e)
             {
-                Console.WriteLine("Se ha producido la Excepción: ", e);
+                Console.WriteLine(e.Message);
             }
             finally
             {
-                Console.WriteLine("No se ha producido ningún error en la ejecución del Hilo Hijo");
+                Monitor.Exit(this);
             }
+            //}
         }
-
+    }
+    class Program
+    {
         static void Main(string[] args)
         {
-            ThreadStart refHijo = new ThreadStart(LLamarHiloHijo);
-            Console.WriteLine("El Hilo Principal --> Esta creando el hilo hijo");
+            Console.WriteLine("******** Se va a realizar MultiThreading ********");
 
-            Thread HiloHijo = new Thread(refHijo);
-            HiloHijo.Start();
+            Imprimir impr = new ProgCSharp.Imprimir();
 
-            Thread.Sleep(2000);
+            Thread[] hilo = new Thread[3];
 
-            Console.WriteLine("El Hilo Principal va a destruir el Hilo Hijo");
+            for (int i = 0; i < 3; i++)
+            {
+                hilo[i] = new Thread(new ThreadStart(impr.ImprimirNumeros));
+                hilo[i].Name = "Hilo Hijo" + i;
+            }
 
-            HiloHijo.Abort();
-
+            foreach (Thread h in hilo)
+            {
+                h.Start();
+            }
             Console.ReadKey();
         }
     }
