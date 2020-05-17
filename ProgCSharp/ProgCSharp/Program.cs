@@ -9,6 +9,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Compression;
+using System.Xml.Linq;
 
 namespace ProgCSharp
 {
@@ -16,39 +17,34 @@ namespace ProgCSharp
     {
         static void Main(string[] args)
         {
-            ClientesDataContext db = new LinqToSql.ClientesDataContext();
+            string docXML = @"<Departamentos>
+                                <Departamento>Administracion</Departamento>
+                                <Departamento>Ventas</Departamento>
+                                <Departamento>Atencion al cliente</Departamento>
+                                <Departamento>Marketing</Departamento>
+                               </Departamentos>
+                            ";
 
-            // Creación de un usuario
-            /*
-            Tabla nuevoCliente = new Tabla();
+            XDocument documento = new XDocument();
+            documento = XDocument.Parse(docXML);
 
-            nuevoCliente.Nombre = "Jose Antonio";
-            nuevoCliente.Edad = 50;
+            // añadir elementos al documento XML
 
-            db.Tabla.InsertOnSubmit(nuevoCliente);
-            */
+            documento.Element("Departamentos").Add(new XElement("Departamento", "Formacion"));
+            documento.Element("Departamentos").AddFirst(new XElement("Departamento", "Finanzas"));
 
-            // Actualización de un usuario
-            /*
-            Tabla cliente = db.Tabla.FirstOrDefault(x => x.Nombre.Equals("Jose Antonio"));
 
-            cliente.Nombre = "Luis Antonio";
-            cliente.Edad = 45;
-            */
+            //eliminar elementos del documento XML
 
-            // Eliminación de un usuario
-            /*
-            Tabla cliente = db.Tabla.FirstOrDefault(x => x.Nombre.Equals("Paco"));
-            db.Tabla.DeleteOnSubmit(cliente);
-            */
+            documento.Descendants().Where(e => e.Value == "Ventas").Remove();
 
-            var cliente = from c in db.Tabla where c.Nombre == "Luis Antonio" select c;
 
-            foreach (var c in cliente)
+            var resultado = documento.Element("Departamentos").Descendants();
+
+            foreach (XElement elementos in resultado)
             {
-                Console.WriteLine(c.Nombre);
+                Console.WriteLine("El nombre del Departamento es: " + elementos.Value);
             }
-            db.SubmitChanges();
             Console.ReadKey();
         }
     }
