@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Compression;
 using System.Xml.Linq;
+using System.Threading;
 
 namespace ProgCSharp
 {
@@ -17,34 +18,11 @@ namespace ProgCSharp
     {
         static void Main(string[] args)
         {
-            string docXML = @"<Departamentos>
-                                <Departamento>Administracion</Departamento>
-                                <Departamento>Ventas</Departamento>
-                                <Departamento>Atencion al cliente</Departamento>
-                                <Departamento>Marketing</Departamento>
-                               </Departamentos>
-                            ";
+            Thread hilo = Thread.CurrentThread;
 
-            XDocument documento = new XDocument();
-            documento = XDocument.Parse(docXML);
+            hilo.Name = "Hilo Principal de la Aplicación";
 
-            // añadir elementos al documento XML
-
-            documento.Element("Departamentos").Add(new XElement("Departamento", "Formacion"));
-            documento.Element("Departamentos").AddFirst(new XElement("Departamento", "Finanzas"));
-
-
-            //eliminar elementos del documento XML
-
-            documento.Descendants().Where(e => e.Value == "Ventas").Remove();
-
-
-            var resultado = documento.Element("Departamentos").Descendants();
-
-            foreach (XElement elementos in resultado)
-            {
-                Console.WriteLine("El nombre del Departamento es: " + elementos.Value);
-            }
+            Console.WriteLine("El Hilo Principal se llama {0}", hilo.Name);
             Console.ReadKey();
         }
     }
