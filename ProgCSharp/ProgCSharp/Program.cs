@@ -11,56 +11,99 @@ using System.Threading.Tasks;
 using System.IO.Compression;
 using System.Xml.Linq;
 using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace ProgCSharp
 {
-    class Imprimir
-    {
-        public void ImprimirNumeros()
-        {
-            //lock (this)
-            //{
-            Monitor.Enter(this);
-            try
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    Thread.Sleep(1000);
-                    Console.WriteLine(i);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                Monitor.Exit(this);
-            }
-            //}
-        }
-    }
     class Program
     {
-        static void Main(string[] args)
+        static void Imprimir1()
         {
-            Console.WriteLine("******** Se va a realizar MultiThreading ********");
+            Console.WriteLine("Se está ejecutando el Método Imprimir1()");
 
-            Imprimir impr = new ProgCSharp.Imprimir();
-
-            Thread[] hilo = new Thread[3];
-
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 10; i++)
             {
-                hilo[i] = new Thread(new ThreadStart(impr.ImprimirNumeros));
-                hilo[i].Name = "Hilo Hijo" + i;
-            }
-
-            foreach (Thread h in hilo)
-            {
-                h.Start();
+                Console.WriteLine("Ejecutando el Hilo1...");
+                Thread.Sleep(1000);
             }
             Console.ReadKey();
+        }
+
+        static void Imprimir2()
+        {
+            Console.WriteLine("Se está ejecutando el Método Imprimir2()");
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine("Ejecutando el Hilo2...");
+                Thread.Sleep(1000);
+            }
+            Console.ReadKey();
+        }
+
+        static void Main(string[] args)
+        {
+            Thread hilo1 = new Thread(new ThreadStart(Imprimir1));
+            Thread hilo2 = new Thread(new ThreadStart(Imprimir2));
+
+            hilo1.Name = "Principal";
+            hilo2.Name = "Secundario";
+
+            Console.WriteLine("Elige la siguiente Opción:/n");
+            Console.WriteLine("1. Los Hilos se ejecutarán en Paralelo");
+            Console.WriteLine("2. Se ejecutarán los Hilos en Primer o Segundo Plano");
+
+            int opcion = int.Parse(Console.ReadLine());
+
+            if (opcion == 1)
+            {
+                hilo1.Start();
+                hilo2.Start();
+            }
+
+            if (opcion == 2)
+            {
+                Console.WriteLine("Se van a ejecutar los Hilos en Primer o Segundo Plano");
+                Console.WriteLine("Selecciona 1 para ejecutar el hilo en Primer Plano y selecciona 2 para ejecutar el Hilo en Segundo Plano");
+
+                int numeros = int.Parse(Console.ReadLine());
+
+                switch (numeros)
+                {
+                    case 1:
+                        PrimerPlano();
+                        break;
+                    case 2:
+                        SegundoPlano();
+                        break;
+                    default:
+                        break;
+                }
+                Console.WriteLine("El Método Principal se ha Completado...");
+            }
+        }
+
+        static void Retrasar()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine("Ejecutando el hilo...");
+                Thread.Sleep(1000);
+            }
+            Console.ReadKey();
+        }
+
+        static void PrimerPlano()
+        {
+            Thread primerplano = new Thread(new ThreadStart(Retrasar));
+            primerplano.Start();
+        }
+
+        static void SegundoPlano()
+        {
+            Thread segundoPlano = new Thread(new ThreadStart(Retrasar));
+            segundoPlano.IsBackground = true;
+            segundoPlano.Start();
         }
     }
 }
