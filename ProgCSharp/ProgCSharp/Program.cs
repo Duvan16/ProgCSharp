@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO.Compression;
-using System.Xml.Linq;
 using System.Threading;
-using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace ProgCSharp
 {
@@ -19,20 +8,38 @@ namespace ProgCSharp
     {
         static void Main(string[] args)
         {
-            Task<int> tarea1 = new Task<int>(() =>
+            CancellationTokenSource cancelar = new CancellationTokenSource();
+            CancellationToken token = cancelar.Token;
+
+            Task tarea1 = new Task(() =>
             {
-                int resultado = 1;
-
-                for (int i = 1; i < 10; i++)
+                for (int i = 1; i < 10000; i++)
                 {
-                    resultado *= i;
-                }
+                    if (token.IsCancellationRequested)
+                    {
+                        Console.WriteLine("Se ha solicitado la Cancelación de la Tarea");
+                        return;
+                    }
 
-                return resultado;
-            });
+                    Console.WriteLine("El bucle está iterando por el valor {0}", i);
+                }
+            }, token);
+
+            Console.WriteLine("Pulsa para comenzar la Tarea");
+            Console.WriteLine("Pulsa para Cancelar la Tarea");
+           
+            Console.ReadKey();
+
             tarea1.Start();
 
-            Console.WriteLine("El resultado de la tarea es {0}", tarea1.Result);
+            Console.ReadKey();
+
+            cancelar.Cancel();
+
+            Console.WriteLine("La Tarea se está cancelando...");
+
+            Console.WriteLine("El método Principal ha finalizado");
+
             Console.ReadKey();
         }
     }
