@@ -17,93 +17,35 @@ namespace ProgCSharp
 {
     class Program
     {
-        static void Imprimir1()
+        static void Tarea(object mensaje)
         {
-            Console.WriteLine("Se está ejecutando el Método Imprimir1()");
-
-            for (int i = 0; i < 10; i++)
-            {
-                Console.WriteLine("Ejecutando el Hilo1...");
-                Thread.Sleep(1000);
-            }
-            Console.ReadKey();
-        }
-
-        static void Imprimir2()
-        {
-            Console.WriteLine("Se está ejecutando el Método Imprimir2()");
-
-            for (int i = 0; i < 10; i++)
-            {
-                Console.WriteLine("Ejecutando el Hilo2...");
-                Thread.Sleep(1000);
-            }
-            Console.ReadKey();
+            Console.WriteLine("Hola soy una Tarea: {0}", mensaje);
         }
 
         static void Main(string[] args)
         {
-            Thread hilo1 = new Thread(new ThreadStart(Imprimir1));
-            Thread hilo2 = new Thread(new ThreadStart(Imprimir2));
+            // Crear instancia usando el delegado Action
 
-            hilo1.Name = "Principal";
-            hilo2.Name = "Secundario";
+            Task tarea1 = new Task(new Action<object>(Tarea), "Tarea 1");
 
-            Console.WriteLine("Elige la siguiente Opción:/n");
-            Console.WriteLine("1. Los Hilos se ejecutarán en Paralelo");
-            Console.WriteLine("2. Se ejecutarán los Hilos en Primer o Segundo Plano");
+            // crear instancia usando una función anónima
 
-            int opcion = int.Parse(Console.ReadLine());
-
-            if (opcion == 1)
+            Task tarea2 = new Task(delegate (object objeto)
             {
-                hilo1.Start();
-                hilo2.Start();
-            }
+                Tarea(objeto);
+            }, "Tarea 2");
 
-            if (opcion == 2)
-            {
-                Console.WriteLine("Se van a ejecutar los Hilos en Primer o Segundo Plano");
-                Console.WriteLine("Selecciona 1 para ejecutar el hilo en Primer Plano y selecciona 2 para ejecutar el Hilo en Segundo Plano");
+            // crear instancia usando una función lambda
 
-                int numeros = int.Parse(Console.ReadLine());
+            Task tarea3 = new Task((objeto) => Tarea(objeto), "Tarea 3");
 
-                switch (numeros)
-                {
-                    case 1:
-                        PrimerPlano();
-                        break;
-                    case 2:
-                        SegundoPlano();
-                        break;
-                    default:
-                        break;
-                }
-                Console.WriteLine("El Método Principal se ha Completado...");
-            }
-        }
+            tarea1.Start();
+            tarea2.Start();
+            tarea3.Start();
 
-        static void Retrasar()
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                Console.WriteLine("Ejecutando el hilo...");
-                Thread.Sleep(1000);
-            }
+            Console.WriteLine("Se ha finalizado la ejecución de las tareas. Pulsa una tecla para salir");
+
             Console.ReadKey();
-        }
-
-        static void PrimerPlano()
-        {
-            Thread primerplano = new Thread(new ThreadStart(Retrasar));
-            primerplano.Start();
-        }
-
-        static void SegundoPlano()
-        {
-            Thread segundoPlano = new Thread(new ThreadStart(Retrasar));
-            segundoPlano.IsBackground = true;
-            segundoPlano.Start();
         }
     }
 }
