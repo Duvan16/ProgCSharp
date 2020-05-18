@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,39 +9,32 @@ namespace ProgCSharp
 {
     class Program
     {
+        [Serializable]
+        class serializacion
+        {
+            public int id;
+            public string nombre;
+        }
+
         static void Main(string[] args)
         {
-            CancellationTokenSource cancelar = new CancellationTokenSource();
-            CancellationToken token = cancelar.Token;
+            serializacion objeto = new serializacion();
 
-            Task tarea1 = new Task(() =>
-            {
-                for (int i = 1; i < 10000; i++)
-                {
-                    if (token.IsCancellationRequested)
-                    {
-                        Console.WriteLine("Se ha solicitado la Cancelación de la Tarea");
-                        return;
-                    }
+            objeto.id = 1;
+            objeto.nombre = "Paco";
 
-                    Console.WriteLine("El bucle está iterando por el valor {0}", i);
-                }
-            }, token);
+            IFormatter formatear = new BinaryFormatter();
+            Stream stream = new FileStream(@"E:\temp\ejemplo.txt", FileMode.Create, FileAccess.Write);
 
-            Console.WriteLine("Pulsa para comenzar la Tarea");
-            Console.WriteLine("Pulsa para Cancelar la Tarea");
-           
-            Console.ReadKey();
+            formatear.Serialize(stream, objeto);
+            stream.Close();
 
-            tarea1.Start();
+            stream = new FileStream(@"E:\temp\ejemplo.txt", FileMode.Open, FileAccess.Read);
 
-            Console.ReadKey();
+            serializacion objetonuevo = (serializacion)formatear.Deserialize(stream);
 
-            cancelar.Cancel();
-
-            Console.WriteLine("La Tarea se está cancelando...");
-
-            Console.WriteLine("El método Principal ha finalizado");
+            Console.WriteLine(objetonuevo.id);
+            Console.WriteLine(objetonuevo.nombre);
 
             Console.ReadKey();
         }
